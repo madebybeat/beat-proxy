@@ -10,10 +10,16 @@ export class PlayService {
   }
 
   async load(magnet: string): Promise<any> {
-    return new Promise((resolve) => {
-      this.instance.add(magnet, (torrent: Torrent) => {
-        resolve(torrent.files[0].createReadStream());
+    const torrent = await this.instance.get(magnet);
+
+    if (torrent) {
+      return torrent.files[0].createReadStream();
+    } else {
+      return new Promise((resolve) => {
+        this.instance.add(magnet, (torrent: Torrent) => {
+          resolve(torrent.files[0].createReadStream());
+        });
       });
-    });
+    }
   }
 }
