@@ -1,6 +1,6 @@
-import { IsString } from 'class-validator';
+import { IsMagnetURI } from 'class-validator';
 
 export class PlayDto {
-  @IsString()
+  @IsMagnetURI()
   magnet: string;
 }
